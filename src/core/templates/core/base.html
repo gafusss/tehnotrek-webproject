@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>XPLDB</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic" rel="stylesheet">
+    <link href="{% static "core/base.css" %}" rel="stylesheet">
+    {% block head %}
+    {% endblock %}
+</head>
+<body id="body-main">
+<div id="div-main">
+    <header id="header-main">
+        <div class="div-header-main"></div>
+        <div class="div-header-main" id="div-header-main-title"><p><h2>EXPLOIT DATABASE</h2></p></div>
+        <div class="div-header-main">
+            {% if user.is_authenticated %}
+            Привет, <b>{{ user.username }}</b><br>
+            <a id="a-header-login" href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+            <a id="a-header-logout" href="{% url 'login' %}">Войти</a>
+            {% endif %}
+        </div>
+    </header>
+    <nav id="nav-main">
+        <a href="{% url 'index' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Главная</a>
+        <a href="{% url 'exploit:post_list' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Эксплоиты</a>
+        <a href="{% url 'exploit:new_post' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Добавить
+            эксплоит</a>
+        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+        <a class="a-nav-main" href="{% url 'admin:index' %}">Панель администрирования</a>
+        {% endif %}
+        {% endif %}
+    </nav>
+    <section id="section-main">
+        <header>
+            {% block title %}{% endblock %}
+        </header>
+        {% block content %}{% endblock %}
+    </section>
+    <footer id="footer-main">
+        <span id="span-footer-main">gafusss 2016</span>
+    </footer>
+</div>
+</body>
+</html>

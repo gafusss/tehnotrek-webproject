@@ -1,0 +1,15 @@
+<article id="article-comment-{% if show_replies == True %}{{ comment.id }}{% else %}reply-to{% endif %}" class="article-comment">
+    <header>
+        <p><strong>От: {{ comment.author }}</strong>{% if show_replies == True %}{% if user.is_authenticated %}<a class="a-comment-reply" href="?parent_comment={{ comment.id }}#form-comment-new" onclick="reply({{comment.id}}); return false;">Ответить</a>{% endif %}{% endif %}</p>
+    </header>
+    <p class="p-comment-text">{{ comment.text }}</p>
+    {% if show_replies == True %}
+    {% if comment.replies.all %}
+    <section class="section-comment-replies">
+    {% for comm in comment.replies.all %}
+    {% include 'comments/comment.html' with comment=comm %}
+    {% endfor %}
+    </section>
+    {% endif %}
+    {% endif %}
+</article>
