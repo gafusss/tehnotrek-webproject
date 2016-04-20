@@ -68,7 +68,7 @@ a.active {
 }
 
 #section-main {
-    padding: 30px 10px 90px 40px;
+    padding: 30px 40px 90px 40px;
 }
 
 #footer-main {
@@ -121,20 +121,21 @@ td, th {
     color: red;
 }
 
-input[type="submit"]{
+input[type="submit"] {
     color: inherit;
     padding: 10px;
     border: none;
     background: rgba(0, 0, 255, 0.4);
     font: inherit;
     display: inline-block;
+    cursor: pointer;
 }
 
-.span-exploit-confirmed, #span-rating-positive {
+.span-exploit-confirmed, .span-rating-positive {
     color: #57ff14;
 }
 
-.span-exploit-not-confirmed, #span-rating-negative {
+.span-exploit-not-confirmed, .span-rating-negative {
     color: red;
 }
 
@@ -154,4 +155,9 @@ input[type="submit"]{
     padding: 10px 20px;
     margin-bottom: 10px;
     display: inline-block;
+}
+
+.input-submit-like-disabled {
+    color: inherit !important;
+    background: inherit !important;
 }
