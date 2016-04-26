@@ -6,8 +6,25 @@ html, #body-main {
     /*background-color: #10121B;*/
     color: rgba(255, 255, 255, 0.95); /*#8381A5;*/
     font-weight: 300;
-    background: url(background.jpg) no-repeat top center fixed;
+}
+
+/*next 2: background: fixed CPU high load workaround
+works like shit in IE and Edge*/
+#body-main {
+    position: relative;
+}
+
+#body-main::before {
+    background: url(background.jpg) no-repeat top center; /*fixed*/
     background-size: cover;
+    content: ' ';
+    height: 100%;
+    left:0;
+    top:0;
+    position: fixed;
+    width: 100%;
+    will-change: transform;
+    z-index: -1;
 }
 
 a {
