@@ -1,4 +1,4 @@
-function rateAjax(url) {
+function rateAjax(url, content_type_id, pk) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
     xhr.onreadystatechange = function () {
@@ -33,7 +33,6 @@ function rateAjax(url) {
         }
     };
     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-    xhr.setRequestHeader("X-Requested-With", 'XMLHttpRequest')
     xhr.send();
 }
 

@@ -6,6 +6,7 @@
     <title>XPLDB</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic" rel="stylesheet">
     <link href="{% static "core/base.css" %}" rel="stylesheet">
+    {% include "core/jquery.html" %}
     {% block head %}
     {% endblock %}
 </head>
@@ -26,6 +27,7 @@
     <nav id="nav-main">
         <a href="{% url 'index' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Главная</a>
         <a href="{% url 'exploit:post_list' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Эксплоиты</a>
+        <a href="{% url 'search:haystack_search' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Поиск</a>
         <a href="{% url 'exploit:new_post' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Добавить
             эксплоит</a>
         {% if user.is_authenticated %}

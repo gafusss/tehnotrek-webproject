@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^exploits/', include('exploit.urls', namespace='exploit')),
     url(r'^login/$', login, {'template_name': 'core/login.html'}, name='login'),
     url(r'^logout/$', logout, {'next_page': 'index'}, name='logout'),
+    url(r'^search/', include('haystack.urls', app_name='search', namespace='search')),
+    url(r'^rating/', include('like.urls', namespace='rating')),
 ]

@@ -178,3 +178,11 @@ input[type="submit"] {
     color: inherit !important;
     background: inherit !important;
 }
+
+ul {
+    list-style-type: none;
+}
+
+.a-list {
+    margin-bottom: 10px;
+}
