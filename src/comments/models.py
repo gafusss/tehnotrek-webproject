@@ -5,14 +5,19 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from like.models import LikeMixin
 from .tasks import send_email_notification
 
 
 # Create your models here.
 
-class Comment(models.Model):
+class Comment(LikeMixin):
     def __unicode__(self):
         return 'Post: %20s' % self.text
+
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('exploit:post', args=[str(self.parent_post.id)]) + "#article-comment-" + str(self.id)
 
     text = models.TextField(verbose_name=u'Комментарий')
     parent_post = models.ForeignKey('exploit.Post', verbose_name=u'Родительский эксплоит', related_name='comments')

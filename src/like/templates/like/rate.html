@@ -2,25 +2,15 @@
 <form class="form-rate" action="{% if like == False %}{{ object.get_dislike_url }}{% else %}{{ object.get_like_url }}{% endif %}" method="POST">
     {% csrf_token %}
     <input type="submit"
-           id="input-submit-like-{{ content_type_id }}-{{ pk }}-{{ like }}"
+           class="input-submit-like-{{ like }}"
+           id="input-submit-like-{{ object.get_content_type_id }}-{{ object.pk }}-{{ like }}"
            value="{% if like == False %}&#x2796;{% else %}&#x2795;{% endif %}"
-           onclick="rateAjax({% if like == True %}'{% url 'exploit:likeAjax' pk=object.pk %}'{% else %}'{% url 'exploit:dislikeAjax' pk=object.pk %}'{% endif %}); return false;"
+           onclick="rateAjax('{% if like == True %}{{ object.get_like_url }}{% else %}{{ object.get_dislike_url }}{% endif %}', {{ object.get_content_type_id }}, {{ object.pk }}); return false;"
             {%if like == value %}
            class="input-submit-like-disabled"
            disabled
-            {% endif %}>
+            {% endif %}/>
 </form>
 {% else %}
 {% if like == False %}&#x2796;{% else %}&#x2795;{% endif %}
 {% endif %}
-
-<!--
-like (action)
-form_action (action url)
-value (current like value)
-content_type_id
-pk
-
-params for rateAjax()
-
--->

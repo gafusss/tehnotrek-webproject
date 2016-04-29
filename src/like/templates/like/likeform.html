@@ -1,18 +1,3 @@
-<!--
-object
- rating
-value (current like value)
-content_type_id
-pk
--->
-<!-- for rate.html
-like (action)
-form_action (action url)
-
-params for rateAjax()
-url
-
--->
-{% include 'exploit/rate.html' with like=False %}
-<span id="span-rating-{{ content_type_id }}-{{ pk }}" class="span-rating-{% if rating > 0%}positive{% elif rating == 0 %}zero{% else %}negative{% endif %}"> {{ rating }} </span>
-{% include 'exploit/rate.html' with like=True %}
+{% include 'like/rate.html' with like=False %}
+<span id="span-rating-{{ object.get_content_type_id }}-{{ object.pk }}" class="span-rating-{% if object.get_rating > 0%}positive{% elif object.get_rating == 0 %}zero{% else %}negative{% endif %}"> {{ object.get_rating }} </span>
+{% include 'like/rate.html' with like=True %}

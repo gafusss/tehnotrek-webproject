@@ -41,5 +41,17 @@ class LikeMixin(models.Model):
         content_type = ContentType.objects.get_for_model(self.__class__)
         return 'rating:dislike', (), {'content_type_id': content_type.id, 'pk': self.id}
 
+    def get_content_type_id(self):
+        return ContentType.objects.get_for_model(self.__class__).id
+
+    def get_rating(self):
+        likes = Like.objects.all().filter(item_type=ContentType.objects.get_for_model(self.__class__),
+                                          item_id=self.id,
+                                          value=True).count()
+        dislikes = Like.objects.all().filter(item_type=ContentType.objects.get_for_model(self.__class__),
+                                             item_id=self.id,
+                                             value=False).count()
+        return likes - dislikes
+
     class Meta:
         abstract = True
