@@ -20,7 +20,7 @@
             Привет, <b>{{ user.username }}</b><br>
             <a id="a-header-login" href="{% url 'logout' %}">Выйти</a>
             {% else %}
-            <a id="a-header-logout" href="{% url 'login' %}">Войти</a>
+            <a id="a-header-logout" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Войти</a>
             {% endif %}
         </div>
     </header>
