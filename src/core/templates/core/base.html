@@ -30,10 +30,8 @@
         <a href="{% url 'search:haystack_search' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Поиск</a>
         <a href="{% url 'exploit:new_post' as url %}{{url}}" class="a-nav-main{% if request.path == url %} active{% endif %}">Добавить
             эксплоит</a>
-        {% if user.is_authenticated %}
         {% if user.is_superuser %}
         <a class="a-nav-main" href="{% url 'admin:index' %}">Панель администрирования</a>
-        {% endif %}
         {% endif %}
     </nav>
     <section id="section-main">

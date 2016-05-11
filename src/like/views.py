@@ -21,25 +21,13 @@ class LikeView(View):
         return HttpResponseNotAllowed(['POST'])
 
     def post(self, *args, **kwargs):
-        like = Like.objects.filter(user=self.user,
-                                   item_type=ContentType.objects.get_for_model(self.object.__class__),
-                                   item_id=self.object.pk).first()
-        if like:
-            like.value = self.value
-        else:
-            like = Like(item_type=ContentType.objects.get_for_model(self.object.__class__),
-                        item_id=self.object.pk,
-                        user=self.user,
-                        value=self.value)
-        like.save()
+        like, created = Like.objects.update_or_create(user=self.user,
+                                                      item_type=ContentType.objects.get_for_model(
+                                                          self.object.__class__),
+                                                      item_id=self.object.pk,
+                                                      defaults={'value': self.value})
 
-        likes = Like.objects.all().filter(item_type=ContentType.objects.get_for_model(self.object.__class__),
-                                          item_id=self.object.pk,
-                                          value=True).count()
-        dislikes = Like.objects.all().filter(item_type=ContentType.objects.get_for_model(self.object.__class__),
-                                             item_id=self.object.pk,
-                                             value=False).count()
-        rating = likes - dislikes
+        rating = self.object.get_rating()
 
         if self.is_ajax_request:
             return JsonResponse({'like': like.value, 'rating': rating})

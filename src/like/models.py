@@ -8,8 +8,10 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-
 # Create your models here.
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class Like(models.Model):
     def __unicode__(self):
@@ -30,6 +32,11 @@ class Like(models.Model):
 
 class LikeMixin(models.Model):
     likes = GenericRelation(Like, content_type_field='item_type', object_id_field='item_id')
+    rating = models.IntegerField(default=0, verbose_name=u'Рэйтинг')
+
+    def get_absolute_url(self):
+        print("Models using LikeMixin should have get_absolute_url defined")
+        raise
 
     @models.permalink
     def get_like_url(self):
@@ -55,3 +62,9 @@ class LikeMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
+@receiver(post_save, sender=Like, dispatch_uid="like_save_update_rating")
+def like_post_save(sender, instance=None, **kwargs):
+    instance.item.rating = instance.item.get_rating()
+    instance.item.save()

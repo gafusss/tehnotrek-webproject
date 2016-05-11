@@ -50,20 +50,21 @@ class Comment(LikeMixin):
 
 
 @receiver(post_save, sender=Comment, dispatch_uid="post_save_comment_centrifugo")
-def comment_post_save(sender, instance=None, **kwargs):
+def comment_post_save(sender, instance, created, **kwargs):
     from adjacent import Client
-    client = Client()
-    client.publish(instance.parent_post.get_cent_answers_channel_name(), instance.as_compact_dict())
-    response = client.send()
-    print(
-        'sent to channel {}, got response from centrifugo: {}'.format(
-            instance.parent_post.get_cent_answers_channel_name(),
-            response))
+    if created:
+        client = Client()
+        client.publish(instance.parent_post.get_cent_answers_channel_name(), instance.as_compact_dict())
+        response = client.send()
+        print(
+            'sent to channel {}, got response from centrifugo: {}'.format(
+                instance.parent_post.get_cent_answers_channel_name(),
+                response))
 
 
 @receiver(post_save, sender=Comment, dispatch_uid="post_save_comment_email")
-def on_comment_creation(sender, instance, *args, **kwargs):
-    if kwargs.get('created'):
+def on_comment_creation(sender, instance, created, *args, **kwargs):
+    if created:
         comment = instance
         send_email_notification.delay(
             'A.gafusss.A@gmail.com',

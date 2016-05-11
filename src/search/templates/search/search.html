@@ -5,7 +5,14 @@
     <div class="col-md-12">
         <form method="get" action=".">
             <table>
-                {{ form.as_table }}
+                <tr>
+                    <td>Найти:</td>
+                    <td>{{ form.q }}</td>
+                </tr>
+                <tr>
+                    <td>Искать в:</td>
+                    <td>{{ form.models }}</td>
+                </tr>
                 <tr>
                     <td colspan="2">
                         <input type="submit" value="Найти">

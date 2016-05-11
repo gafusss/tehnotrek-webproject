@@ -1,3 +1,3 @@
 {% include 'like/rate.html' with like=False %}
-<span id="span-rating-{{ object.get_content_type_id }}-{{ object.pk }}" class="span-rating-{% if object.get_rating > 0%}positive{% elif object.get_rating == 0 %}zero{% else %}negative{% endif %}"> {{ object.get_rating }} </span>
+<span id="span-rating-{{ object.get_content_type_id }}-{{ object.pk }}" class="span-rating-{% if object.rating > 0%}positive{% elif object.rating == 0 %}zero{% else %}negative{% endif %}"> {{ object.rating }} </span>
 {% include 'like/rate.html' with like=True %}

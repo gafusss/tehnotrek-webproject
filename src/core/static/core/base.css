@@ -112,7 +112,7 @@ a.active {
     padding: 10px 40px;
 }
 
-textarea, input[type="text"], select, input[type="password"] {
+textarea, input[type="text"], select, input[type="password"], input[type="search"] {
     font-family: inherit;
     background: rgba(0, 0, 0, 0.10);
     color: inherit;
